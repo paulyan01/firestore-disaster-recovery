@@ -1,0 +1,14 @@
+- initialize:
+    assign:
+      - project: ${sys.get_env("GOOGLE_CLOUD_PROJECT_ID")}
+      - firestoreID: (default)
+      - backupStorage: gs://capston2-mcti-bucket-testing
+- export:
+    call: googleapis.firestore.v1.projects.databases.exportDocuments
+    args:
+      name: ${"projects/" + project + "/databases/(default)"}
+      body:
+        outputUriPrefix: ${backupStorage}
+    result: result
+- result: 
+   return: ${result}
